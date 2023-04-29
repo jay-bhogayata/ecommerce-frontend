@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import Cookies from "js-cookie";
 
 export default function Auth({ isSignupComponent }) {
   // setup useForm (fhf)
@@ -34,6 +33,7 @@ export default function Auth({ isSignupComponent }) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       })
         .then((res) => res.json())
         .then((data) => console.log(data))
@@ -49,12 +49,6 @@ export default function Auth({ isSignupComponent }) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          if (data.token) {
-            Cookies.set("token", data.token, {
-              sameSite: "None",
-              secure: true,
-            });
-          }
         })
         .catch((e) => console.log(e));
     }
@@ -63,6 +57,9 @@ export default function Auth({ isSignupComponent }) {
   const handleLogout = () => {
     fetch("http://localhost:8080/api/v1/logout", {
       credentials: "include",
+      headers: {
+        "Set-Cookie": "token",
+      },
     })
       .then((res) => res.json())
       .then((data) => console.log(data))
