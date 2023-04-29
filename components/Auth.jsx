@@ -50,7 +50,10 @@ export default function Auth({ isSignupComponent }) {
         .then((data) => {
           console.log(data);
           if (data.token) {
-            Cookies.set("token", data.token);
+            Cookies.set("token", data.token, {
+              sameSite: "None",
+              secure: true,
+            });
           }
         })
         .catch((e) => console.log(e));
