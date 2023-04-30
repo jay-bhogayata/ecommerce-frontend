@@ -23,11 +23,11 @@ export default function Auth({ isSignupComponent }) {
       },
     },
   };
-
+  const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
   // handle login ans signup
   const handleAuth = (data) => {
     if (isSignupComponent) {
-      fetch("http://localhost:8080/api/v1/signup", {
+      fetch(`${server_url}/signup`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -37,10 +37,10 @@ export default function Auth({ isSignupComponent }) {
         credentials: "same-origin",
       })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => console.log(data), alert("signup success"))
         .catch((e) => console.log(e));
     } else {
-      fetch("http://localhost:8080/api/v1/login", {
+      fetch(`${server_url}/login`, {
         method: "POST",
         body: JSON.stringify(data),
         credentials: "include",
@@ -53,18 +53,19 @@ export default function Auth({ isSignupComponent }) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          alert("login success");
         })
         .catch((e) => console.log(e));
     }
   };
 
   const handleLogout = () => {
-    fetch("http://localhost:8080/api/v1/logout", {
+    fetch(`${server_url}/logout`, {
       credentials: "include",
       sameSite: "none",
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => console.log(data), alert("logout success"))
       .catch((error) => console.log(error));
   };
 
