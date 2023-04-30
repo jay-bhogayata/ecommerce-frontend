@@ -47,6 +47,7 @@ export default function Auth({ isSignupComponent }) {
         headers: {
           "Content-Type": "application/json",
           "access-control-expose-headers": "Set-Cookie",
+          sameSite: "none",
         },
       })
         .then((res) => res.json())
@@ -60,6 +61,7 @@ export default function Auth({ isSignupComponent }) {
   const handleLogout = () => {
     fetch("http://localhost:8080/api/v1/logout", {
       credentials: "include",
+      sameSite: "none",
     })
       .then((res) => res.json())
       .then((data) => console.log(data))
