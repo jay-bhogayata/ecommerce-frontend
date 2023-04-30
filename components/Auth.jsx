@@ -34,6 +34,7 @@ export default function Auth({ isSignupComponent }) {
           "Content-Type": "application/json",
         },
         credentials: "include",
+        credentials: "same-origin",
       })
         .then((res) => res.json())
         .then((data) => console.log(data))
@@ -42,8 +43,10 @@ export default function Auth({ isSignupComponent }) {
       fetch("http://localhost:8080/api/v1/login", {
         method: "POST",
         body: JSON.stringify(data),
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          "access-control-expose-headers": "Set-Cookie",
         },
       })
         .then((res) => res.json())
@@ -57,9 +60,6 @@ export default function Auth({ isSignupComponent }) {
   const handleLogout = () => {
     fetch("http://localhost:8080/api/v1/logout", {
       credentials: "include",
-      headers: {
-        "Set-Cookie": "token",
-      },
     })
       .then((res) => res.json())
       .then((data) => console.log(data))
