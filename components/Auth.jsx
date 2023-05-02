@@ -5,8 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Auth({ isSignupComponent }) {
+  // toastify(for toast messages )
   const notify = (msg) => toast.success(`${msg} success`);
   const notifyErr = (msg) => toast.error(msg);
+
   // setup useForm (fhf)
   const {
     register,
@@ -28,7 +30,9 @@ export default function Auth({ isSignupComponent }) {
       },
     },
   };
+
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+
   // handle login ans signup
   const handleAuth = (data) => {
     if (isSignupComponent) {
@@ -46,6 +50,7 @@ export default function Auth({ isSignupComponent }) {
           console.log(data);
           if (data.success) {
             notify("signup");
+            window.location.href = "/login";
           } else {
             notifyErr(data.message);
           }
@@ -66,10 +71,19 @@ export default function Auth({ isSignupComponent }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-
+          console.log(data.newUser);
+          console.log(data.newUser?.userName);
+          console.log(data.newUser.email);
+          console.log(data.newUser.role);
+          const user = {
+            name: data.newUser,
+            email: data.newUser?.email,
+            role: data.newUser?.role,
+          };
+          localStorage.setItem("user", JSON.stringify(user));
           if (data.success) {
             notify("login");
+            window.location.href = "/profile";
           } else {
             notifyErr(data.message);
           }
@@ -78,25 +92,6 @@ export default function Auth({ isSignupComponent }) {
           console.log(e);
         });
     }
-  };
-
-  const handleLogout = () => {
-    fetch(`${server_url}/logout`, {
-      credentials: "include",
-      sameSite: "none",
-    })
-      .then((res) => res.json())
-
-      .then((data) => {
-        console.log(data);
-
-        if (data.success) {
-          notify("logout");
-        } else {
-          notifyErr(data.message);
-        }
-      })
-      .catch((error) => console.log(error));
   };
 
   return (
@@ -124,12 +119,7 @@ export default function Auth({ isSignupComponent }) {
               {isSignupComponent ? "Sign up to MyShop" : "Sing in to MyShop"}
             </h2>
           </div>
-          <button
-            className="bg-red-800 px-5 py-2 rounded-lg sm:w-1/4 self-center"
-            onClick={handleLogout}
-          >
-            logout
-          </button>
+
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" action="#" method="POST">
               <ToastContainer />
