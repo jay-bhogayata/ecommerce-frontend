@@ -71,10 +71,6 @@ export default function Auth({ isSignupComponent }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.newUser);
-          console.log(data.newUser?.userName);
-          console.log(data.newUser.email);
-          console.log(data.newUser.role);
           const user = {
             name: data.newUser,
             email: data.newUser?.email,
