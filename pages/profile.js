@@ -39,6 +39,10 @@ const profile = () => {
     }
   }, []);
 
+  const goToProduct = () => {
+    window.location.href = "/product";
+  };
+
   return (
     <div className="flex flex-col  min-h-screen items-center">
       <ToastContainer />
@@ -51,7 +55,15 @@ const profile = () => {
           <h1 className="text-3xl text-center font-medium">{data.userName}</h1>
         </div>
       </div>
-
+      <button
+        type="submit"
+        className="flex justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 my-5
+        w-1/2
+        md:w-1/4"
+        onClick={goToProduct}
+      >
+        go to product list
+      </button>
       <button
         type="submit"
         className="flex justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 
