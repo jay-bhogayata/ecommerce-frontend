@@ -19,16 +19,34 @@ const Product = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2">
-      {product.map((p) => (
-        <div key={p._id} className="border-2 p-5 ">
-          <h1>{p.name}</h1>
-          <p>category : {p.catagory}</p>
-          <p>from:{p.brand}</p>
-          <p>{p.description}</p>
+    <section className="text-gray-600 body-font">
+      <h1 className="text-center my-5 text-2xl font-semibold">
+        {" "}
+        product catalog{" "}
+      </h1>
+      <div className="container px-5 py-24 mx-auto">
+        <div className="flex flex-wrap -m-4">
+          {product.map((p) => (
+            <div
+              key={p._id}
+              className="lg:w-1/4 md:w-1/2 p-4 w-full border-2 border-stone-700 my-2"
+            >
+              <Image src={"/myshop.png"} width={100} height={100} />
+
+              <div className="mt-4">
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+                  {p.catagory}
+                </h3>
+                <h2 className="text-gray-900 title-font text-lg font-medium">
+                  {p.name}
+                </h2>
+                <p className="mt-1">${p.price}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 };
 
